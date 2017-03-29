@@ -1,0 +1,16 @@
+diff --git a/includes/media.theme.inc b/includes/media.theme.inc
+index 2b57782..bd99228 100644
+--- a/includes/media.theme.inc
++++ b/includes/media.theme.inc
+@@ -21,6 +21,11 @@ function theme_media_thumbnail($variables) {
+     'data-fid' => $element['#file']->fid,
+   );
+   $prefix = '<div ' . drupal_attributes($attributes) . '><div class="media-thumbnail">';
++  if (module_exists('lightbox2') && ($element['#item']['type'] == 'image')) {
++    $image_url = file_create_url($element['#item']['uri']);
++    $lightbox = '<a style="color: white; background-color: black; padding: 1px 5px; border: 1px solid white; position: absolute; font-weight: bold; z-index: 10;" title="' . $element['#name'] . '" href="' . $image_url . '" rel="lightbox">+</a>';
++    $prefix = $lightbox . $prefix;
++  }
+   $suffix = '</div></div>';
+ 
+   // Arguments for the thumbnail link.
